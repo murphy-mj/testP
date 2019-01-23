@@ -1,6 +1,6 @@
 'use strict';
 
-const Donations = {
+const Accounts = {
   index: {
     handler: function(request, h) {
       return h.view('main', { title: 'Welcome to Donations' });
@@ -13,7 +13,7 @@ const Donations = {
   },
   signup: {
     handler: function(request, h) {
-      return h.redirect('/index');
+      return h.redirect('/home');
     }
   },
   showLogin: {
@@ -33,4 +33,4 @@ const Donations = {
   }
 };
 
-module.exports = Donations;
+module.exports = Accounts;
