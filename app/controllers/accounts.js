@@ -8,11 +8,13 @@ const Accounts = {
     }
   },
   showSignup: {
+    auth: false,
     handler: function(request, h) {
       return h.view('signup', { title: 'Sign up for Donations' });
     }
   },
   signup: {
+    auth: false,
     handler: function(request, h) {
       const user = request.payload;
       this.users[user.email] = user;
@@ -21,11 +23,13 @@ const Accounts = {
     }
   },
   showLogin: {
+    auth: false,
     handler: function(request, h) {
       return h.view('login', { title: 'Login to Donations' });
     }
   },
   login: {
+    auth: false,
     handler: function(request, h) {
       const user = request.payload;
       if (user.email in this.users && user.password === this.users[user.email].password) {
