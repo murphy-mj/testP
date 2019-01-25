@@ -2,6 +2,7 @@
 
 const Accounts = {
   index: {
+    auth: false,
     handler: function(request, h) {
       return h.view('main', { title: 'Welcome to Donations' });
     }
@@ -27,7 +28,7 @@ const Accounts = {
   login: {
     handler: function(request, h) {
       const user = request.payload;
-      if ((user.email in this.users) && (user.password === this.users[user.email].password)) {
+      if (user.email in this.users && user.password === this.users[user.email].password) {
         this.currentUser = this.users[user.email];
         return h.redirect('/home');
       }

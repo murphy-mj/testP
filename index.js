@@ -37,6 +37,10 @@ async function init() {
     ttl: 24 * 60 * 60 * 1000,
   });
 
+  server.auth.default({
+    strategy: 'standard',
+  });
+
   server.route(require('./routes'));
   await server.start();
   console.log(`Server running at: ${server.info.uri}`);
