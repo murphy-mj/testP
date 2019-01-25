@@ -16,6 +16,7 @@ server.bind({
 async function init() {
   await server.register(require('inert'));
   await server.register(require('vision'));
+  await server.register(require('hapi-auth-cookie'));
 
   server.views({
     engines: {
@@ -27,6 +28,13 @@ async function init() {
     partialsPath: './app/views/partials',
     layout: true,
     isCached: false
+  });
+
+  server.auth.strategy('standard', 'cookie', {
+    password: 'secretpasswordnotrevealedtoanyone',
+    cookie: 'donation-cookie',
+    isSecure: false,
+    ttl: 24 * 60 * 60 * 1000,
   });
 
   server.route(require('./routes'));
