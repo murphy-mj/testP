@@ -15,6 +15,7 @@ const Accounts = {
     handler: function(request, h) {
       const user = request.payload;
       this.users[user.email] = user;
+      this.currentUser = user;
       return h.redirect('/home');
     }
   },
