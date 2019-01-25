@@ -37,6 +37,7 @@ async function init() {
   });
 
   server.auth.default({
+    mode: 'required',
     strategy: 'standard',
   });
 
