@@ -8,6 +8,7 @@ const server = Hapi.server({
 });
 
 server.bind({
+  users: {},
   donations: [],
 });
 
