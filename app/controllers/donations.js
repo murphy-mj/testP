@@ -1,5 +1,6 @@
 'use strict';
 
+const User = require('../models/user');
 const Donation = require('../models/donation');
 
 const Donations = {
@@ -10,7 +11,7 @@ const Donations = {
   },
   report: {
     handler: async function(request, h) {
-      const donations = await Donation.find()
+      const donations = await Donation.find();
       return h.view('report', {
         title: 'Donations to Date',
         donations: donations
@@ -19,10 +20,14 @@ const Donations = {
   },
   donate: {
     handler: async function(request, h) {
+      const id = request.auth.credentials.id;
+      const user = await User.findById(id);
       const data = request.payload;
       const newDonation = new Donation({
         amount: data.amount,
-        method: data.method
+        method: data.method,
+        firstName: user.firstName,
+        lastName: user.lastName
       });
       await newDonation.save();
       return h.redirect('/report');
