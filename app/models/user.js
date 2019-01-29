@@ -1,5 +1,6 @@
 'use strict';
 
+const Boom = require('boom');
 const Mongoose = require('mongoose');
 const Schema = Mongoose.Schema;
 
@@ -16,7 +17,10 @@ userSchema.statics.findByEmail = function(email) {
 
 userSchema.methods.comparePassword = function(candidatePassword) {
   const isMatch = this.password === candidatePassword;
-  return isMatch;
+  if (!isMatch) {
+    throw new Boom('Password mismatch');
+  }
+  return this;
 };
 
 module.exports = Mongoose.model('User', userSchema);
