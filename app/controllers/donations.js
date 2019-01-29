@@ -11,7 +11,7 @@ const Donations = {
   },
   report: {
     handler: async function(request, h) {
-      const donations = await Donation.find();
+      const donations = await Donation.find().populate('donor');
       return h.view('report', {
         title: 'Donations to Date',
         donations: donations
