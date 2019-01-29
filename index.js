@@ -12,6 +12,8 @@ server.bind({
   donations: []
 });
 
+require('./app/models/db');
+
 async function init() {
   await server.register(require('inert'));
   await server.register(require('vision'));
