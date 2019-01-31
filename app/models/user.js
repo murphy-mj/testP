@@ -12,7 +12,7 @@ const userSchema = new Schema({
 });
 
 userSchema.statics.findByEmail = function(email) {
-  return this.findOne({ email });
+  return this.findOne({ email : email});
 };
 
 userSchema.methods.comparePassword = function(candidatePassword) {
