@@ -71,6 +71,26 @@ const Accounts = {
   },
   login: {
     auth: false,
+    validate: {
+      payload: {
+        email: Joi.string()
+            .email()
+            .required(),
+        password: Joi.string().required()
+      },
+      options: {
+        abortEarly: false
+      },
+      failAction: function(request, h, error) {
+        return h
+            .view('login', {
+              title: 'Sign in error',
+              errors: error.details
+            })
+            .takeover()
+            .code(400);
+      }
+    },
     handler: async function(request, h) {
       const { email, password } = request.payload;
       try {
@@ -114,7 +134,7 @@ const Accounts = {
       failAction: function(request, h, error) {
         return h
             .view('settings', {
-              title: 'Sign up error',
+              title: 'Update settings error',
               errors: error.details
             })
             .takeover()
