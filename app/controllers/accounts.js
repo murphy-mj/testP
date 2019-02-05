@@ -2,6 +2,7 @@
 
 const Boom = require('boom');
 const User = require('../models/user');
+const Joi = require('joi');
 
 const Accounts = {
   index: {
@@ -18,6 +19,28 @@ const Accounts = {
   },
   signup: {
     auth: false,
+    validate: {
+      payload: {
+        firstName: Joi.string().required(),
+        lastName: Joi.string().required(),
+        email: Joi.string()
+          .email()
+          .required(),
+        password: Joi.string().required()
+      },
+      options: {
+        abortEarly: false
+      },
+      failAction: function(request, h, error) {
+        return h
+          .view('signup', {
+            title: 'Sign up error',
+            errors: error.details
+          })
+          .takeover()
+          .code(400);
+      }
+    },
     handler: async function(request, h) {
       try {
         const payload = request.payload;
