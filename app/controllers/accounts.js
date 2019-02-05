@@ -74,8 +74,8 @@ const Accounts = {
     validate: {
       payload: {
         email: Joi.string()
-            .email()
-            .required(),
+          .email()
+          .required(),
         password: Joi.string().required()
       },
       options: {
@@ -83,12 +83,12 @@ const Accounts = {
       },
       failAction: function(request, h, error) {
         return h
-            .view('login', {
-              title: 'Sign in error',
-              errors: error.details
-            })
-            .takeover()
-            .code(400);
+          .view('login', {
+            title: 'Sign in error',
+            errors: error.details
+          })
+          .takeover()
+          .code(400);
       }
     },
     handler: async function(request, h) {
@@ -124,8 +124,8 @@ const Accounts = {
         firstName: Joi.string().required(),
         lastName: Joi.string().required(),
         email: Joi.string()
-            .email()
-            .required(),
+          .email()
+          .required(),
         password: Joi.string().required()
       },
       options: {
@@ -133,12 +133,12 @@ const Accounts = {
       },
       failAction: function(request, h, error) {
         return h
-            .view('settings', {
-              title: 'Update settings error',
-              errors: error.details
-            })
-            .takeover()
-            .code(400);
+          .view('settings', {
+            title: 'Update settings error',
+            errors: error.details
+          })
+          .takeover()
+          .code(400);
       }
     },
     handler: async function(request, h) {
