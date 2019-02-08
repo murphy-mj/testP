@@ -2,11 +2,13 @@
 
 const User = require('../models/user');
 const Donation = require('../models/donation');
+const Candidate = require('../models/candidate');
 
 const Donations = {
   home: {
-    handler: function(request, h) {
-      return h.view('home', { title: 'Make a Donation' });
+    handler: async function(request, h) {
+      const candidates = await Candidate.find();
+      return h.view('home', { title: 'Make a Donation', candidates: candidates });
     }
   },
   report: {
@@ -28,10 +30,18 @@ const Donations = {
         const id = request.auth.credentials.id;
         const user = await User.findById(id);
         const data = request.payload;
+
+        const rawCandidate = request.payload.candidate.split(',');
+        const candidate = await Candidate.findOne({
+          lastName: rawCandidate[0],
+          firstName: rawCandidate[1]
+        });
+
         const newDonation = new Donation({
           amount: data.amount,
           method: data.method,
-          donor: user._id
+          donor: user._id,
+          candidate: candidate._id
         });
         await newDonation.save();
         return h.redirect('/report');
