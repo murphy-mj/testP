@@ -49,15 +49,6 @@ suite('Candidate API tests', function () {
     assert.equal(returnedCandidate.lastName, 'Grumble');
     assert.equal(returnedCandidate.office, 'President');
   });
-
-  test('delete all candidates', async function () {
-    let response = await axios.get('http://localhost:3000/api/candidates');
-    const candidates = response.data;
-    assert.isAbove(candidates.length, 0);
-    response = await axios.delete('http://localhost:3000/api/candidates');
-    response = await axios.get('http://localhost:3000/api/candidates');
-    assert.equal(0, response.data.length)
-  });
 });
 
 
