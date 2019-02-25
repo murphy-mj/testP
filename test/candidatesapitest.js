@@ -32,4 +32,32 @@ suite('Candidate API tests', function () {
     assert.equal(oneCandidate.lastName, 'Simpson');
     assert.equal(oneCandidate.office, 'President');
   });
+
+  test('create a candidate', async function () {
+    const candidatesUrl = 'http://localhost:3000/api/candidates';
+    const newCandidate = {
+      firstName: 'Barnie',
+      lastName: 'Grumble',
+      office: 'President',
+    };
+
+    const response = await axios.post(candidatesUrl, newCandidate);
+    const returnedCandidate = response.data;
+    assert.equal(201, response.status);
+
+    assert.equal(returnedCandidate.firstName, 'Barnie');
+    assert.equal(returnedCandidate.lastName, 'Grumble');
+    assert.equal(returnedCandidate.office, 'President');
+  });
+
+  test('delete all candidates', async function () {
+    let response = await axios.get('http://localhost:3000/api/candidates');
+    const candidates = response.data;
+    assert.isAbove(candidates.length, 0);
+    response = await axios.delete('http://localhost:3000/api/candidates');
+    response = await axios.get('http://localhost:3000/api/candidates');
+    assert.equal(0, response.data.length)
+  });
 });
+
+
