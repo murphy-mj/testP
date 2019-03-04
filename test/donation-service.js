@@ -9,8 +9,12 @@ class DonationService {
   }
 
   async getCandidates() {
+    try {
     const response = await axios.get(this.baseUrl + '/api/candidates');
     return response.data;
+    } catch (e) {
+      return null;
+    }
   }
 
   async getCandidate(id) {
