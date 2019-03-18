@@ -7,6 +7,15 @@ class DonationService {
     this.baseUrl = baseUrl;
   }
 
+  async authenticate(user) {
+    try {
+      const response = await axios.post(this.baseUrl + '/api/users/authenticate', user);
+      return response.data;
+    } catch (e) {
+      return null;
+    }
+  }
+
   async getUsers() {
     try {
       const response = await axios.get(this.baseUrl + '/api/users');
