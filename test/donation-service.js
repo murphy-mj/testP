@@ -123,6 +123,15 @@ class DonationService {
       return null;
     }
   }
+
+  async deleteDonations(candidateId) {
+    try {
+      const response = await axios.delete(this.baseUrl + '/api/candidates/' + candidateId + '/donations');
+      return response.data;
+    } catch (e) {
+      return null;
+    }
+  }
 }
 
 module.exports = DonationService;

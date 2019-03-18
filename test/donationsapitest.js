@@ -51,4 +51,16 @@ suite('Donation API tests', function() {
     const d2 = await donationService.getDonations(returnedCandidate._id);
     assert.equal(d2.length, 0);
   });
+
+  test('delete donations', async function () {
+    const returnedCandidate = await donationService.createCandidate(newCandidate);
+    for (var i = 0; i < donations.length; i++) {
+      await donationService.makeDonation(returnedCandidate._id, donations[i]);
+    }
+
+    donationService.deleteDonations(returnedCandidate._id);
+    const d = await donationService.getDonations(returnedCandidate._id);
+    console.log(d);
+    assert.equal(d.length, 0);
+  });
 });
