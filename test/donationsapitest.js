@@ -8,15 +8,28 @@ const _ = require('lodash');
 suite('Donation API tests', function() {
   let donations = fixtures.donations;
   let newCandidate = fixtures.newCandidate;
+  let newUser = fixtures.newUser;
 
   const donationService = new DonationService(fixtures.donationService);
 
-  setup(async function() {
-    donationService.deleteAllCandidates();
-    donationService.deleteAllDonations();
+  suiteSetup(async function() {
+    await donationService.deleteAllUsers();
+    const returnedUser = await donationService.createUser(newUser);
+    const response = await donationService.authenticate(newUser);
   });
 
-  teardown(async function() {});
+  suiteTeardown(async function() {
+    await donationService.deleteAllUsers();
+    donationService.clearAuth();
+  });
+
+  setup(async function() {
+    await donationService.deleteAllDonations();
+  });
+
+  teardown(async function() {
+    await donationService.deleteAllDonations();
+  });
 
   test('create a donation', async function() {
     const returnedCandidate = await donationService.createCandidate(newCandidate);
@@ -52,13 +65,13 @@ suite('Donation API tests', function() {
     assert.equal(d2.length, 0);
   });
 
-  test('delete donations', async function () {
+  test('delete donations', async function() {
     const returnedCandidate = await donationService.createCandidate(newCandidate);
     for (var i = 0; i < donations.length; i++) {
       await donationService.makeDonation(returnedCandidate._id, donations[i]);
     }
 
-    donationService.deleteDonations(returnedCandidate._id);
+    await donationService.deleteDonations(returnedCandidate._id);
     const d = await donationService.getDonations(returnedCandidate._id);
     console.log(d);
     assert.equal(d.length, 0);
