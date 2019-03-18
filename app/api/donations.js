@@ -40,6 +40,14 @@ const Donations = {
       await Donation.deleteMany({});
       return { success: true };
     }
+  },
+
+  deleteDonations: {
+    auth: false,
+    handler: async function(request, h) {
+      await Donation.deleteMany({candidate: request.params.id });
+      return { success: true };
+    }
   }
 };
 
