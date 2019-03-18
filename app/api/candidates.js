@@ -6,7 +6,9 @@ const Candidate = require('../models/candidate');
 const Candidates = {
 
   find: {
-    auth: false,
+    auth: {
+      strategy: 'jwt',
+    },
     handler: async function(request, h) {
       const candidates = await Candidate.find();
       return candidates;
@@ -14,7 +16,9 @@ const Candidates = {
   },
 
   findOne: {
-    auth: false,
+    auth: {
+      strategy: 'jwt',
+    },
     handler: async function(request, h) {
       try {
         const candidate = await Candidate.findOne({ _id: request.params.id });
@@ -29,7 +33,9 @@ const Candidates = {
   },
 
   create: {
-    auth: false,
+    auth: {
+      strategy: 'jwt',
+    },
     handler: async function(request, h) {
       const newCandidate = new Candidate(request.payload);
       const candidate = await newCandidate.save();
@@ -41,7 +47,9 @@ const Candidates = {
   },
 
   deleteAll: {
-    auth: false,
+    auth: {
+      strategy: 'jwt',
+    },
     handler: async function(request, h) {
       await Candidate.deleteMany({});
       return { success: true };
@@ -49,7 +57,9 @@ const Candidates = {
   },
 
   deleteOne: {
-    auth: false,
+    auth: {
+      strategy: 'jwt',
+    },
     handler: async function(request, h) {
       const response = await Candidate.deleteOne({ _id: request.params.id });
       if (response.deletedCount == 1) {
