@@ -13,7 +13,7 @@ suite('Candidate API tests', function () {
   const donationService = new DonationService(fixtures.donationService);
 
   setup(async function () {
-    donationService.deleteAllUsers();
+    await donationService.deleteAllUsers();
   });
 
   test('authenticate', async function () {
@@ -26,7 +26,7 @@ suite('Candidate API tests', function () {
   test('verify Token', async function () {
     const returnedUser = await donationService.createUser(newUser);
     const response = await donationService.authenticate(newUser);
-
+    assert(response.success);
     const userInfo = utils.decodeToken(response.token);
     assert.equal(userInfo.email, returnedUser.email);
     assert.equal(userInfo.userId, returnedUser._id);
