@@ -76,4 +76,15 @@ suite('Donation API tests', function() {
     console.log(d);
     assert.equal(d.length, 0);
   });
+
+  test('create a donation and check donor', async function() {
+    const returnedCandidate = await donationService.createCandidate(newCandidate);
+    await donationService.makeDonation(returnedCandidate._id, donations[0]);
+    const returnedDonations = await donationService.getDonations(returnedCandidate._id);
+    assert.isDefined(returnedDonations[0].donor);
+
+    const users = await donationService.getUsers();
+    assert(_.some([users[0]], newUser), 'returnedUser must be a superset of newUser');
+  });
+
 });
