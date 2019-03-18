@@ -1,5 +1,5 @@
 const Candidates = require('./app/api/candidates');
-const Users= require('./app/api/users');
+const Users = require('./app/api/users');
 const Donations = require('./app/api/donations');
 
 module.exports = [
@@ -14,10 +14,11 @@ module.exports = [
   { method: 'POST', path: '/api/users', config: Users.create },
   { method: 'DELETE', path: '/api/users/{id}', config: Users.deleteOne },
   { method: 'DELETE', path: '/api/users', config: Users.deleteAll },
+  { method: 'POST', path: '/api/users/authenticate', config: Users.authenticate },
 
   { method: 'GET', path: '/api/donations', config: Donations.findAll },
   { method: 'GET', path: '/api/candidates/{id}/donations', config: Donations.findByCandidate },
   { method: 'POST', path: '/api/candidates/{id}/donations', config: Donations.makeDonation },
   { method: 'DELETE', path: '/api/donations', config: Donations.deleteAll },
-  { method: 'DELETE', path: '/api/candidates/{id}/donations', config: Donations.deleteDonations },
+  { method: 'DELETE', path: '/api/candidates/{id}/donations', config: Donations.deleteDonations }
 ];
